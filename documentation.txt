@@ -1,0 +1,34 @@
+1. use the NJ styling
+2. mkdir config
+3. mkdir instance
+4. touch docker-compose.yaml
+5. touch Dockerfile
+6. git config --list --show origin
+7. git status
+8. touch .gitignore
+9. touch requirements
+10. touch .dockerignore
+11. docker-compose
+12. version "2"
+13. gunicorn command with --bind option - to 0.0.0.0:8000
+14. entry-point is: "app:create_app()"
+15. touch Dockerfile
+16. touch config/settings.py
+17. touch instance/settings.py
+18. touch snakeeyes/__init__.py
+19. touch snakeeyes/app.py
+20. Rid the container of all image trash
+21. Add sphinx
+22. mkdir docs
+23. cd docs && sphinx-quickstart
+24. cd docs && make html
+25. Add docs folder to .gitignore
+26. touch docs/requirements.txt
+
+
+$ docker-compose build --no-cache
+$ docker-compose up
+$ ctrl-C
+$ docker-compose stop
+$ docker-compose down
+$ docker rmi f $(docker images -qf dangling=true)
