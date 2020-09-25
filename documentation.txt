@@ -25,10 +25,72 @@
 25. Add docs folder to .gitignore
 26. touch docs/requirements.txt
 
-
 $ docker-compose build --no-cache
 $ docker-compose up
 $ ctrl-C
 $ docker-compose stop
 $ docker-compose down
 $ docker rmi f $(docker images -qf dangling=true)
+
+27. mkdir snakeeyes/blueprints
+28. mkdir snakeeyes/static
+29. mkdir snakeeyes/templates
+30. mkdir snakeeyes/blueprints/page
+31. mkdir snakeeyes/blueprints/page
+32. mkdir snakeeyes/blueprints/page/templates
+33. mkdir snakeeyes/blueprints/page/templates/page
+34. touch snakeeyes/blueprints/__init__.py
+35. touch snakeeyes/blueprints/page/__init__.py
+36. cd snakeeyes/blueprints/page/templates/page && touch home.html privacy.html terms.html
+37. Add import statement for 'page' to 'app.py'
+38. app.py: Delete reference to the initial home page from section 06; "def index("
+39. Add code for html in 'page'
+40. mkdir snakeeyes/templates/layouts
+41. touch snakeeyes/templates/layouts/base.html
+42. mkdir snakeeyes/static/fonts
+43. mkdir snakeeyes/static/images
+44. mkdir snakeeyes/static/scripts
+45. mkdir snakeeyes/static/scripts/vendor
+46. mkdir snakeeyes/static/styles
+47. mkdir snakeeyes/static/styles/vendor
+48. touch snakeeyes/static/styles/main.css
+49. cp ~/Desktop/bsawf-course-material/07-BPs-and-Jinja-templates/snakeeyes/static/fonts/*ontawesome* \
+snakeeyes/static/fonts/
+50. cp ~/Desktop/bsawf-course-material/07-BPs-and-Jinja-templates/snakeeyes/static/images/*.* \
+snakeeyes/static/images/
+51. cp ~/Desktop/bsawf-course-material/07-BPs-and-Jinja-templates/snakeeyes/static/scripts/vendor/*.js \
+snakeeyes/static/scripts/vendor
+52. cp ~/Desktop/bsawf-course-material/07-BPs-and-Jinja-templates/snakeeyes/static/styles/vendor/*.min.css \
+snakeeyes/static/styles/vendor
+53. touch .env
+54. touch snakeeyes/blueprints/page/views.py
+
+
+<li><a href="{{ url_for('page.privacy') }}">Privacy Policy</a></li>
+<li><a href="{{ url_for('page.terms') }}">Terms of Service</a></li>
+
+#--------------------
+Home page
+1. 3 column container - ["Place bets", "Win currency", "Leaderboard"]
+2. Page container: class [container, sm-margin-top]
+3. 3 links
+4. Body block only; Extends "layouts/base.html"
+
+#--------------------
+Templates -  base-layout [base.html]
+1. navigation bar
+2. main tag, class is container
+3. main tag contains:  [Header block, Body block]
+4. footer
+5. static - script: [bootstrap, main]
+6. static - styles: [bootstrap, main, font-awesome]
+7. static - images
+
+
+
+
+
+static
+
+templates
+
