@@ -174,11 +174,15 @@ $ docker-compose exec website snakeeyes test
 #---------------------
 Section 10 - Add Extension
 
-Follow SAME methodology
+1. touch snakeeyes/extensions.py
+2. app.py, add code for extensions
+3. extensions.py, init "debug toolbar"
+4. test that debug-toolbar works
 
 #---------------------
 Section 11 - Add Contact form
 
+Follow SAME methodology
 
 #----------------------------
 Convert to Webpack update

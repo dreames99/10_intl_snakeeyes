@@ -1,6 +1,7 @@
 from flask import Flask
 
 from snakeeyes.blueprints.page import page
+from snakeeyes.extensions import debug_toolbar
 
 
 def create_app(settings_override=None):
@@ -19,5 +20,18 @@ def create_app(settings_override=None):
         app.config.update(settings_override)
 
     app.register_blueprint(page)
+    extensions(app)
 
     return app
+
+
+def extensions(app):
+    """
+    Register 0 or more extensions (mutates the app passed in).
+
+    :param app: Flask application instance
+    :return: None
+    """
+    debug_toolbar.init_app(app)
+
+    return None
