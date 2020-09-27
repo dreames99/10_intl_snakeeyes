@@ -65,7 +65,8 @@ snakeeyes/static/styles/vendor
 53. touch .env
 54. touch snakeeyes/blueprints/page/views.py
 
-
+#------------------------------
+NOT in code
 <li><a href="{{ url_for('page.privacy') }}">Privacy Policy</a></li>
 <li><a href="{{ url_for('page.terms') }}">Terms of Service</a></li>
 
@@ -86,11 +87,63 @@ Templates -  base-layout [base.html]
 6. static - styles: [bootstrap, main, font-awesome]
 7. static - images
 
+#--------------------
+$ git push origin master
+$ git remote
+$ got remote -v
+
+https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes
+
+Next Steps:-
+1. Read notes on moving to webpack
+2. Add terms page
+3. Add privacy page
+4. Review lesson 30 - Create a Home page
+5. Read Pro Git - working with "remotes"
+6. Pull in the "Webpack" Dockerfile
+7. Create "Webpack" project structure
+
+#---------------------
+Section 8 Add testing framework
+
+1. requirements, Add entries for testing
+2. app.py, add settings override
+3. ToDo: Add privacy.html
+4. ToDo: Add terms.html
+5. ToDo: snakeeyes/blueprints/page/views.py, uncomment privacy, terms views
+6. ToDo: layouts/base.html, uncomment hrefs to prvacy, terms
+7. mkdir snakeeyes/tests
+8. mkdir snakeeyes/tests/page
+9. touch snakeeyes/tests/__init__.py
+10. touch snakeeyes/tests/conftest.py
+11. touch snakeeyes/tests/page/__init__.py
+12. touch snakeeyes/tests/page/test_views.py
+13. test/conftest.py, Add session fixture
+14. test/conftest.py, pytest works by importing and using app.create_app()
+15. test/conftest.py, pytest works with @pytest.yield_fixture decorator
+16. test/conftest.py, Add function fixture
+17. snakeeyes/tests/page/test_views.py, Add tests
+18. comment-out tests for privacy, terms
+19. run tests
+20. Must run build b/c requirements were added
+
+#---------------------
+Section 9 - Add CLI scripting function
+
+Follow SAME methodology
+
+#---------------------
+Section 10 - Add Extension
+
+#---------------------
+Section 11 - Add Contact form
 
 
+#----------------------------
+Convert to Webpack update
+1. mkdir assets
+2. mkdir public
+3. update .env
+4. Change Dockerfile in steps
 
-
-static
-
-templates
 

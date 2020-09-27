@@ -3,3 +3,9 @@ Flask==0.10.1
 werkzeug==0.14.1
 
 gunicorn==19.4.5
+
+# Section 08 - Testing
+pytest==5.1.0
+pytest-cov==2.7.1
+flake8==3.7.8
+
