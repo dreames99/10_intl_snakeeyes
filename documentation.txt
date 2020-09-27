@@ -126,14 +126,55 @@ Section 8 Add testing framework
 18. comment-out tests for privacy, terms
 19. run tests
 20. Must run build b/c requirements were added
+21. run local git commands
+22. run git remote
 
 #---------------------
 Section 9 - Add CLI scripting function
 
-Follow SAME methodology
+1. cp ~/Desktop/bsawf-course-material/09-Create-cli-script/snakeeyes/static/fonts/*ontAwesome* \
+snakeeyes/static/fonts/
+2. ToDo: Add privacy.html
+3. ToDo: Add terms.html
+4. ToDo: snakeeyes/blueprints/page/views.py, uncomment privacy, terms views
+5. ToDo: layouts/base.html, uncomment hrefs to privacy, terms
+6. mkdir cli
+7. mkdir cli/commands
+8. touch cli/__init__.py
+9. touch cli/cli.py
+10. touch cli/commands/__init__.py
+11. touch cli/commands/cmd_cov.py
+12. touch cli/commands/cmd_flake8.py
+13. touch cli/commands/cmd_cov.py
+14. cli/cli.py, return list of commands
+15. cli/cli.py, get command, pattern: compile + eval + return function
+16. dynamic eval of compiled code: https://realpython.com/python-eval-function/
+17. @click.command(cls=CLI) decorator, command alias pattern
+18. apply Command Alias pattern: https://click.palletsprojects.com/en/7.x/advanced/
+19. touch cli/commands/cmd_test.py
+20. cli/commands/cmd_cov.py, return term-missing coverage report
+21. cli/commands/cmd_cov.py, uses "return subprocess.call(...)"
+22. https://queirozf.com/entries/python-3-subprocess-examples#call-example-using-shell-true
+23. Add line "RUN pip install..." to Dockerfile, lesson no 41 [1:45]
+24. touch setup.py
+25. Add setup entry with "entry-point"
+26. mkdir SnakeEyes_CLI.egg-info
+27. touch SnakeEyes_CLI.egg-info/dependency_links.txt
+28. touch SnakeEyes_CLI.egg-info/entry_points.txt
+29. touch SnakeEyes_CLI.egg-info/PKG-INFO
+30. touch SnakeEyes_CLI.egg-info/requires.txt
+31. touch SnakeEyes_CLI.egg-info/SOURCES.txt
+32. touch SnakeEyes_CLI.egg-info/top_level.txt
+33. modify "egg-info" files with required information
+
+$ docker-compose exec website snakeeyes
+$ docker-compose exec website snakeeyes flake8
+$ docker-compose exec website snakeeyes test
 
 #---------------------
 Section 10 - Add Extension
+
+Follow SAME methodology
 
 #---------------------
 Section 11 - Add Contact form
