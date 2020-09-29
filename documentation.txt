@@ -63,7 +63,6 @@ snakeeyes/static/scripts/vendor
 52. cp ~/Desktop/bsawf-course-material/07-BPs-and-Jinja-templates/snakeeyes/static/styles/vendor/*.min.css \
 snakeeyes/static/styles/vendor
 53. touch .env
-54. touch snakeeyes/blueprints/page/views.py
 
 #------------------------------
 NOT in code
@@ -156,6 +155,7 @@ snakeeyes/static/fonts/
 21. cli/commands/cmd_cov.py, uses "return subprocess.call(...)"
 22. https://queirozf.com/entries/python-3-subprocess-examples#call-example-using-shell-true
 23. Add line "RUN pip install..." to Dockerfile, lesson no 41 [1:45]
+23a. ... creates egg-folder for Docker container [... overwritten]
 24. touch setup.py
 25. Add setup entry with "entry-point"
 26. mkdir SnakeEyes_CLI.egg-info
@@ -178,11 +178,126 @@ Section 10 - Add Extension
 2. app.py, add code for extensions
 3. extensions.py, init "debug toolbar"
 4. test that debug-toolbar works
+5. $ git push origin master
 
 #---------------------
 Section 11 - Add Contact form
 
-Follow SAME methodology
+1. requirements.txt; [redis, celery, Forms, Flask-Mail]
+2. mkdir lib
+3. touch lib/__init__.py
+4. touch lib/flask_mailplus.py
+5. touch lib/tests.py
+6. mkdir snakeeyes/blueprints/contact
+7. touch snakeeyes/blueprints/contact/__init__.py
+8. touch snakeeyes/blueprints/contact/forms.py
+9. touch snakeeyes/blueprints/contact/tasks.py
+10. touch snakeeyes/blueprints/contact/views.py
+11. mkdir snakeeyes/blueprints/contact/templates
+12. mkdir snakeeyes/blueprints/contact/templates/contact
+13. touch snakeeyes/blueprints/contact/templates/contact/index.html
+14. mkdir snakeeyes/blueprints/contact/templates/contact/mail
+15. touch snakeeyes/blueprints/contact/templates/contact/mail/index.txt
+16. main.css, Add Bootstrap-overrides
+17. mkdir snakeeyes/templates/macros
+18. touch snakeeyes/templates/macros/flash.html
+19. touch snakeeyes/templates/macros/form.html
+20. mkdir snakeeyes/tests/contact
+21. touch snakeeyes/tests/contact/__init__.py
+22. touch snakeeyes/tests/contact/test_tasks.py
+23. touch snakeeyes/tests/contact/test_views.py
+24. app.py, Add Celery
+25. app.py, Add Contact
+26. app.py, Add extensions: mail, csrf
+27. app.py, Add CELERY_TASK_LIST
+28. app.py, Add create celery app
+29. snakeeyes/templates/macros/form.html, Render a form field's label with visual aid
+30. snakeeyes/templates/macros/form.html, Render forms errors
+31. snakeeyes/templates/macros/form.html, Render a form field
+32. snakeeyes/templates/macros/form.html, Render checkbox
+33. snakeeyes/templates/macros/form.html, Render a form group
+34. snakeeyes/templates/macros/form.html, Render ...tag that contains a CSRF token, hidden flds
+35. Understanding the macro code - [https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-iii-web-forms]
+36. macro code - separation of concerns ... use snakeeyes/blueprints/contact/forms.py
+37. macro code - WTF form base class is imported in .../forms.py
+38. macro code - Add form to html template... form knows how to render itself
+39. macro code - https://bootstrap-flask.readthedocs.io/en/latest/index.html
+40. macro code - not using bootstrap-flask... furthers understanding
+41. macro code - ... context processor [CP] makes variables available in templates with the value of g.<object>.
+42.   ...  gives an idea how this works.
+43. macro code - Variables are not limited to values; a CP can also make functions available to templates
+44. macro code - https://flask.palletsprojects.com/en/1.1.x/templating/#context-processors
+45. macro code - Templating With Jinja2 in Flask: Advanced [envato tuts]
+46. snakeeyes/templates/layouts/base.html,  add href to contact.index
+
+47. touch snakeeyes/blueprints/page/views.py
+48. Contact Section issue
+ ""...Task snakeeyes.blueprints.contact.tasks.deliver_contact_email[dc4156b1-8906-4414-b559-3da136e05acf]
+ raised unexpected: SMTPRecipientsRefused({'dreames': (404, b'4.5.2 <dreames>: Recipient address rejected:
+ need fully-qualified address')})
+
+49.  Here is the correct connect info:-
+MAIL_USERNAME = 'dreames'
+MAIL_PASSWORD = 'Ny1958Giants'
+
+50. contact/tasks.py, codebase needs to be changed - DEFAULT_SENDER, Not USERNAME
+51. "send_template_message(subject=...recipients=[celery.conf.get('MAIL_DEFAULT_SENDER')],"
+52. status_code = 200, response = <Response streamed [400 BAD REQUEST]>, message = 'Thanks'
+53. https://flask.palletsprojects.com/en/1.1.x/errorhandling/
+54.  Don't yet know why I am getting a 400 response [in Test]
+55.  Testing the contact form manually works - see screen shot in zzz/
+56.  Eliminate foo@bar.com??
+57.  Set up gunicorn logging from Section 14
+58. Dockerfile, docker-compose, gunicorn -c "python:config.gunicorn" --reload "snakeeyes.app:create_app()"
+59. Add config/gunicorn.py
+60. touch config/gunicorn.py
+
+!direct - NOT using pytest:--
+from celery -
+celery_1   | [2020-09-28 18:27:54,947: WARNING/ForkPoolWorker-2]
+ b'Content-Type: text/plain; charset="utf-8"\r\nMIME-Version: 1.0\r\nContent-Transfer-Encoding: 7bit\r\n
+ Subject: [Snake Eyes] Contact\r\n
+ From: info@rmsfinance.com\r\n
+ To: info@rmsfinance.com\r\n
+ Date: Mon, 28 Sep 2020 18:27:54 +0000\r\n
+ Message-ID: <160131767252.9.18080475230753893094@d033ae7d3e35>\r\n
+ Reply-To: info@rmsfinance.com\r\n\r\n
+ info@rmsfinance.com wrote:\r\n\r\nTest message from RMS Snake Eyes.\r\n.\r\n'
+
+celery_1   | [2020-09-28 18:27:55,052: WARNING/ForkPoolWorker-2] reply:
+celery_1   | [2020-09-28 18:27:55,052: WARNING/ForkPoolWorker-2] b'250 2.0.0 Ok: queued as 0074A6003D972\r\n'
+celery_1   | [2020-09-28 18:27:55,053: WARNING/ForkPoolWorker-2] reply: retcode (250); Msg: b'2.0.0 Ok: queued as 0074A6003D972'
+celery_1   | [2020-09-28 18:27:55,054: WARNING/ForkPoolWorker-2] data:
+celery_1   | [2020-09-28 18:27:55,055: WARNING/ForkPoolWorker-2] (250, b'2.0.0 Ok: queued as 0074A6003D972')
+celery_1   | [2020-09-28 18:27:55,056: WARNING/ForkPoolWorker-2] send:
+celery_1   | [2020-09-28 18:27:55,056: WARNING/ForkPoolWorker-2] 'quit\r\n'
+celery_1   | [2020-09-28 18:27:55,159: WARNING/ForkPoolWorker-2] reply:
+celery_1   | [2020-09-28 18:27:55,160: WARNING/ForkPoolWorker-2] b'221 2.0.0 Bye\r\n'
+celery_1   | [2020-09-28 18:27:55,160: WARNING/ForkPoolWorker-2] reply: retcode (221); Msg: b'2.0.0 Bye'
+
+Maybe the ANSWER is: success is 250, and not 200
+
+#----------------------------
+Add Section 14 code, logging, middleware, error handling
+1. config/settings.py, Add logging to snakeeyes:  'LOG_LEVEL =...'
+2. snakeeyes/app.py, set up log levels for application; this will override ... setlevel
+3. snakeeyes/app.py, import ProxyFix
+4. snakeeyes/app.py, Add 'def middleware('
+5. Note that ALL logs, by default, are written to stdout
+6. Call middleware function from the app factory method
+7. Call error templates from the app factory meth
+8. Add error templates below middleware
+9. mkdir snakeeyes/templates/errors
+10. touch snakeeyes/templates/errors/404.html
+11. touch snakeeyes/templates/errors/500.html
+12. Modify extends clause to inherit from base.html, Not app.html [till ready]
+13. Add py.test 404 page test
+14. lib/tests.py, Add class ViewTestMixin
+15. app.py, Add exception handler to factory meth
+16. app.py, Add function
+17. contact/test_views.py, Added code ... current_app.config['WTF_CSRF_ENABLED'] = False
+18. 7 passed, 32 [deprecation] warnings in 3.76s
+19. Note: https://www.dynatrace.com/news/blog/from-monitoring-to-software-intelligence-for-flask-applications/
 
 #----------------------------
 Convert to Webpack update
