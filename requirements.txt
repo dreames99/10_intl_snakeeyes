@@ -12,8 +12,10 @@ flake8==3.7.8
 # Section 09 - click
 Click==6.4
 
-# Extensions.
-flask-debugtoolbar==0.10.0
+# Data and Workers
+psycopg2-binary==2.8.6
+Flask-SQLAlchemy==2.1
+SQLAlchemy==1.2.0
 
 redis==3.3.7
 celery==4.4.0
@@ -21,4 +23,11 @@ celery==4.4.0
 # Forms
 Flask-WTF==0.9.5
 WTForms-Components==0.9.7
+
+# Utils
+fake-factory==0.5.7
+
+# Extensions.
+flask-debugtoolbar==0.10.0
 Flask-Mail==0.9.1
+Flask-Login==0.3.2

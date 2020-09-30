@@ -299,6 +299,80 @@ Add Section 14 code, logging, middleware, error handling
 18. 7 passed, 32 [deprecation] warnings in 3.76s
 19. Note: https://www.dynatrace.com/news/blog/from-monitoring-to-software-intelligence-for-flask-applications/
 
+#---------------------
+Section 12 - Add User System
+
+1. Add .env file entries
+2. requirements.txt, Add psycopg2-binary, Flask-Login, Flask-SQLAlchemy
+3. Dockerfile, Add command to install Debian libpq-dev, which enables PG database
+4. Dockerfile, delete environment para, add '.env' param, see .env fle entries
+5. touch lib/safe_next_url.py
+6. lib/tests.py, Update
+7. touch lib/util_datetime.py
+8. touch lib/util_sqlalchemy.py
+9. touch lib/util_wtforms.py
+10. blueprints/contact/templates.index.html - base to app.html
+11. snakeeyes/blueprints/contact/views.py, changes to enable pre-populated frm
+12. snakeeyes/blueprints/page/.../home.html, base to app.html
+13. snakeeyes/blueprints/page/.../home.html, insert hrefs
+14. mkdir snakeeyes/blueprints/user
+15. mkdir snakeeyes/blueprints/user/templates
+16. mkdir snakeeyes/blueprints/user/templates/user
+17. mkdir snakeeyes/blueprints/user/templates/user/mail
+18. touch snakeeyes/blueprints/user/__init__.py
+19. touch snakeeyes/blueprints/user/decorators.py
+20. touch snakeeyes/blueprints/user/forms.py
+21. touch snakeeyes/blueprints/user/models.py
+20. touch snakeeyes/blueprints/user/tasks.py
+21. touch snakeeyes/blueprints/user/validations.py
+22. touch snakeeyes/blueprints/user/views.py
+23. .../forms.py, Login, PasswordReset, BeginPasswordReset, Signup, Welcome, UpdateCredentials
+24. .../user/models.py, authentication, activity-tracking, get-user, encryption, get-token, deserialize-token, is-active ...
+25. .../user/tasks.py,  deliver password reset
+26. .../user/validations.py, ensure-ID, ensure-password
+27. .../user/views.py, See forms.py; Animates: forms, form-widgets
+
+28. touch snakeeyes/blueprints/user/templates/user/mail/password_reset.txt
+29. touch snakeeyes/blueprints/user/templates/user/begin_password_reset.html
+30. touch snakeeyes/blueprints/user/templates/user/login.html
+31. touch snakeeyes/blueprints/user/templates/user/password_reset.html
+32. touch snakeeyes/blueprints/user/templates/user/settings.html
+33. touch snakeeyes/blueprints/user/templates/user/signup.html
+34. touch snakeeyes/blueprints/user/templates/user/update_credentials.html
+35. touch snakeeyes/blueprints/user/templates/user/welcome.html
+
+36. extensions.py, Add sqlalchemy, login_manager
+
+37. touch snakeeyes/templates/layouts/app.html
+37a. touch snakeeyes/templates/layouts/login.html
+
+37b. snakeeyes/templates/layouts/base.html, replace nav with header-block
+38. snakeeyes/templates/layouts/base.html, replace footer with footer-block
+
+39. snakeeyes/tests/conftest.py, ref settings for db-uri
+40. snakeeyes/tests/conftest.py, ref user.model for User
+41. snakeeyes/tests/conftest.py, Add db set-up
+42. snakeeyes/tests/conftest.py, Add def session- enable rollbacks and nested sessions [speed]
+43. snakeeyes/tests/conftest.py, set-up JWS tokens, users
+44. snakeeyes/tests/contact/test_tasks.py, set-up email- 'info@rmsfinance.com'
+45. snakeeyes/tests/contact/test_views.py, set-up email + turn-off CSRF
+46. snakeeyes/tests/page/test_views.py, pages - privacy, terms
+47. mkdir snakeeyes/tests/user
+48. touch snakeeyes/tests/user/__init__.py
+48. touch snakeeyes/tests/user/models.py
+49. touch snakeeyes/tests/user/tasks.py
+50. touch snakeeyes/tests/user/views.py
+
+51. touch cli/commands/cmd_db.py
+52. cp ~/Desktop/bsawf-course-material/12-Create-User-Sys/snakeeyes/static/images/snake-eyes-large.jpg \
+/Users/douglas/_Projects/_Pycharm/NJ_BldSAAS/20_intl_snakeeyes/snakeeyes/static/images/
+
+53. SEED the database
+$ docker-compose exec website snakeeyes db
+$ docker-compose exec website snakeeyes db reset --with-testdb
+
+54. App test results - 40 passed, 409 [Deprecation] warnings
+
 #----------------------------
 Convert to Webpack update
 1. mkdir assets
@@ -306,4 +380,120 @@ Convert to Webpack update
 3. update .env
 4. Change Dockerfile in steps
 
+#---------------------
+Section 13 - Add Admin System
 
+$ find .../Desktop/bsawf-co.../13-Create-Admin-Dashboard/snakeeyes/blueprints/admin
+$ find .../Desktop/bsawf-co.../13-Create-Admin-Dashboard/snakeeyes/tests/admin
+$ find some_directory -maxdepth 1 -type f | wc -l
+
+1. mkdir snakeeyes/blueprints/admin
+2. touch snakeeyes/blueprints/admin/models.py
+3. touch snakeeyes/blueprints/admin/__init__.py
+snakeeyes/blueprints/admin/forms.py
+snakeeyes/blueprints/admin/templates
+snakeeyes/blueprints/admin/templates/admin
+snakeeyes/blueprints/admin/templates/admin/page
+snakeeyes/blueprints/admin/templates/admin/page/dashboard.html
+snakeeyes/blueprints/admin/templates/admin/user
+snakeeyes/blueprints/admin/templates/admin/user/index.html
+snakeeyes/blueprints/admin/templates/admin/user/edit.html
+snakeeyes/blueprints/admin/templates/admin/user/_form.html
+snakeeyes/blueprints/admin/templates/admin/user/new.html
+snakeeyes/blueprints/admin/templates/admin/_menu.html
+snakeeyes/blueprints/admin/templates/macros
+snakeeyes/blueprints/admin/templates/macros/user.html
+snakeeyes/blueprints/admin/views.py
+
+snakeeyes/tests/admin
+snakeeyes/tests/admin/__init__.py
+snakeeyes/tests/admin/test_views.py
+
+touch cli/commands/cmd_add.py
+
+#---------------------
+Webpack
+
+$ colordiff /Users/douglas/Desktop/bsawf-course-material/13-Create-Admin-Dashboard/Dockerfile /Users/douglas/Desktop/20-internationalization/Dockerfile
+
+< FROM python:3.7.5-slim-buster
+< MAINTAINER Nick Janetakis <nick.janetakis@gmail.com>
+---
+> FROM node:12.14.0-buster-slim as webpack
+> LABEL maintainer="Nick Janetakis <nick.janetakis@gmail.com>"
+4,5c4
+< RUN apt-get update && apt-get install -qq -y \
+<   build-essential libpq-dev --no-install-recommends
+---
+> WORKDIR /app/assets
+7,8c6
+< ENV INSTALL_PATH /snakeeyes
+< RUN mkdir -p $INSTALL_PATH
+---
+> COPY assets/package.json assets/*yarn* ./
+10c8,34
+< WORKDIR $INSTALL_PATH
+---
+> ENV BUILD_DEPS="build-essential" \
+>     APP_DEPS=""
+>
+> RUN apt-get update \
+>   && apt-get install -y ${BUILD_DEPS} ${APP_DEPS} --no-install-recommends \
+>   && yarn install \
+>   && rm -rf /var/lib/apt/lists/* \
+>   && rm -rf /usr/share/doc && rm -rf /usr/share/man \
+>   && apt-get purge -y --auto-remove ${BUILD_DEPS} \
+>   && apt-get clean
+>
+> COPY assets .
+>
+> ARG NODE_ENV="production"
+> ENV NODE_ENV="${NODE_ENV}"
+>
+> RUN if [ "${NODE_ENV}" != "development" ]; then \
+>   yarn run build; else mkdir -p /app/public; fi
+>
+> CMD ["bash"]
+>
+> #
+>
+> FROM python:3.8.1-slim-buster as app
+> LABEL maintainer="Nick Janetakis <nick.janetakis@gmail.com>"
+>
+> WORKDIR /app
+13c37,54
+< RUN pip install -r requirements.txt
+---
+>
+> ENV BUILD_DEPS="build-essential" \
+>     APP_DEPS="curl libpq-dev"
+>
+> RUN apt-get update \
+>   && apt-get install -y ${BUILD_DEPS} ${APP_DEPS} --no-install-recommends \
+>   && pip install -r requirements.txt \
+>   && rm -rf /var/lib/apt/lists/* \
+>   && rm -rf /usr/share/doc && rm -rf /usr/share/man \
+>   && apt-get purge -y --auto-remove ${BUILD_DEPS} \
+>   && apt-get clean
+>
+> ARG FLASK_ENV="production"
+> ENV FLASK_ENV="${FLASK_ENV}" \
+>     FLASK_APP="snakeeyes.app" \
+>     PYTHONUNBUFFERED="true"
+>
+> COPY --from=webpack /app/public /public
+15a57
+>
+18c60,68
+< CMD gunicorn -b 0.0.0.0:8000 --access-logfile - "snakeeyes.app:create_app()"
+---
+> RUN if [ "${FLASK_ENV}" != "development" ]; then \
+>   flask digest compile; fi
+>
+> RUN chmod +x docker-entrypoint.sh
+> ENTRYPOINT ["/app/docker-entrypoint.sh"]
+>
+> EXPOSE 8000
+>
+> CMD ["gunicorn", "-c", "python:config.gunicorn", "snakeeyes.app:create_app()"]
+douglas@Douglass-MBP ~ %

@@ -1,5 +1,5 @@
 import pytest
-
+from flask import url_for
 
 def assert_status_with_message(status_code=200, response=None, message=None):
     """
@@ -20,8 +20,8 @@ def assert_status_with_message(status_code=200, response=None, message=None):
 
 class ViewTestMixin(object):
     """
-    Automatically load in a session and client, this is common for a lot of
-    tests that work w/ views.  See https://docs.pytest.org/en/stable/fixture.html
+    Automatically load in a session and client; common for a lot of tests that
+    work w/ views.  See https://docs.pytest.org/en/stable/fixture.html
     """
 
     @pytest.fixture(autouse=True)
@@ -29,3 +29,48 @@ class ViewTestMixin(object):
         # def __init__(self, session, client):
         self.session = session
         self.client = client
+
+    def login(self, identity='admin@local.host', password='password'):
+        """
+        Login a specific user.
+
+        :return: Flask response
+        """
+        return login(self.client, identity, password)
+
+    def logout(self):
+        """
+        Logout a specific user.
+
+        :return: Flask response
+        """
+        return logout(self.client)
+
+
+def login(client, username='', password=''):
+    """
+    Log a specific user in.
+
+    :param client: Flask client
+    :param username: The username
+    :type username: str
+    :param password: The password
+    :type password: str
+    :return: Flask response
+    """
+    user = dict(identity=username, password=password)
+
+    response = client.post(url_for('user.login'), data=user,
+                           follow_redirects=True)
+
+    return response
+
+
+def logout(client):
+    """
+    Log a specific user out.
+
+    :param client: Flask client
+    :return: Flask response
+    """
+    return client.get(url_for('user.logout'), follow_redirects=True)

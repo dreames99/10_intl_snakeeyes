@@ -60,3 +60,4 @@ notes.pdf
 # misc
 zzz/
 docs/
+.pytest_cache/
